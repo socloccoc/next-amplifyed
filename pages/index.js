@@ -63,9 +63,7 @@ export default function Home({ posts = [] }) {
     const fetchCreateLiveness = async () => {
       const rekognition = await getRekognitionClient();
       const response = await rekognition.createFaceLivenessSession().promise();
-      console.log(response);
-      await new Promise((r) => setTimeout(r, 2000));
-      const mockResponse = { sessionId: 'mockSessionId' };
+      const mockResponse = { sessionId: response.SessionId };
       const data = mockResponse;
 
       setCreateLivenessApiData(data);

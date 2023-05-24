@@ -9,7 +9,7 @@ export async function getRekognitionClient(req) {
 
   const credentials = await Credentials.get();
   const rekognitionClient = new Rekognition({
-    region: 'us-east-2',
+    region: 'us-east-1',
     credentials,
     endpoint: 'https://rekognition.us-east-1.amazonaws.com',
   });
