@@ -8,6 +8,7 @@ import { createPost } from '../src/graphql/mutations';
 import { listPosts } from '../src/graphql/queries';
 import { FaceLivenessDetector } from '@aws-amplify/ui-react-liveness';
 import { Loader, ThemeProvider } from '@aws-amplify/ui-react';
+import { getRekognitionClient } from '@/helpers/rekognition';
 // import styles from '../styles/Home.module.css';
 
 Amplify.configure({ ...awsExports, ssr: true });
@@ -60,9 +61,9 @@ export default function Home({ posts = [] }) {
 
   React.useEffect(() => {
     const fetchCreateLiveness = async () => {
-      /*
-       * This should be replaced with a real call to your own backend API
-       */
+      const rekognition = await getRekognitionClient();
+      const response = await rekognition.createFaceLivenessSession().promise();
+      console.log(response);
       await new Promise((r) => setTimeout(r, 2000));
       const mockResponse = { sessionId: 'mockSessionId' };
       const data = mockResponse;
@@ -104,7 +105,7 @@ export default function Home({ posts = [] }) {
       ) : (
         <FaceLivenessDetector
           sessionId={createLivenessApiData.sessionId}
-          region="us-east-1"
+          region="us-east-2"
           onAnalysisComplete={handleAnalysisComplete}
         />
       )}
